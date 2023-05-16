@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="danmukmanager.DanmukMapper">
+
+    <resultMap id="BaseResultMap" type="org.example.springboot.scheduled.model.Danmuk">
+        <id column="ID" property="id" jdbcType="VARCHAR"></id>
+        <result column="ROOM_ID" property="roomId" jdbcType="VARCHAR"></result>
+        <result column="DANMUK" property="danmuk" jdbcType="CLOB"></result>
+        <result column="DANMUK_MSG" property="danmukMsg" jdbcType="CLOB"></result>
+        <result column="DANMUK_TYPE" property="danmukType" jdbcType="VARCHAR"></result>
+        <result column="DANMUK_USER_ID" property="danmukUserId" jdbcType="VARCHAR"></result>
+        <result column="DANMUK_USER_NAME" property="danmukUserName" jdbcType="VARCHAR"></result>
+        <result column="DANMUK_TIME" property="danmukTime" jdbcType="TIMESTAMP"></result>
+    </resultMap>
+
+    <sql id="base">
+        ID,ROOM_ID,DANMUK,DANMUK_TYPE,DANMUK_USER_ID,DANMUK_USER_NAME,DANMUK_TIME
+    </sql>
+
+    <select id="findById" resultMap="BaseResultMap">
+        <!--SELECT * FROM LOAN_SYS_DANMUK WHERE ID = #{id,jdbcType=VARCHAR}-->
+        SELECT * FROM LOAN_SYS_DANMUK ORDER BY ID LIMIT #{id,jdbcType=VARCHAR},1
+    </select>
+
+    <select id="findDistinctBy" resultMap="BaseResultMap">
+        SELECT * FROM LOAN_SYS_DANMUK WHERE DANMUK_TYPE = 'DANMU_MSG' ORDER BY ID ASC
+    </select>
+
+    <select id="findDistinctBy2" resultMap="BaseResultMap">
+        SELECT <include refid="base"/> FROM LOAN_SYS_DANMUK WHERE DANMUK_TYPE = 'DANMU_MSG' ORDER BY ID ASC
+    </select>
+
+</mapper>
